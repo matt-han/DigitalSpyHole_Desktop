@@ -1,0 +1,30 @@
+@CHARSET "ISO-8859-1";
+
+.root {
+	-fx-spacing: 10;
+	-fx-background-color:#808080;
+	-fx-padding: 10;
+}
+
+.txt_Login {
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+}
+
+.txt_Stream {
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+	-fx-background-color:#FFFFFF;
+}
+
+.button {
+	-fx-font-family: "Arial";
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;	
+	-fx-text-fill: #383640;
+}
+
+.button:hover {
+	-fx-background-color: linear-gradient(#2A5058, #61a2b1);
+	-fx-text-fill: #ffffff;	
+}
