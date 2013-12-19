@@ -26,13 +26,13 @@ public class DisplayDatabase {
 		{
 			//c = DBConnectFlogger.connect();
 			c = DBConnection.connect();
-			String SQL = "SELECT * from accounts";
+			String SQL = "SELECT * from tb_user";
 			//String SQL = "SELECT * from tb_user";
 			// ResultSet
 			ResultSet rs = c.createStatement().executeQuery(SQL);
 			/**********************************
 			 * TABLE COLUMN ADDED DYNAMICALLY *
-			 **********************************
+			 **********************************/
 			for (int i = 0; i < rs.getMetaData().getColumnCount(); i++)
 			{
 				// We are using non property style for making dynamic table
@@ -59,7 +59,7 @@ public class DisplayDatabase {
 					// Iterate Column
 					row.add(rs.getString(i));
 				}
-				System.out.println("Row [1] added "+row );
+				System.out.println("Row added "+row );
 				data.add(row);
 			}
 			// FINALLY ADDED TO TableView

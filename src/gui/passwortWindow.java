@@ -70,26 +70,11 @@ public class passwortWindow extends Application {
 	            	streamWindow strWin = new streamWindow();
 	            	strWin.start(stage);        
 					System.out.println("OK Button");
-			//		}
+			//	}
 				
 			}
 		});
-/**			nicht nötig ???!!!
-		Button btn_RegABB = new Button("Abbruch");
-		HBox abbBtn = new HBox(10);
-		abbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-		abbBtn.getChildren().add(btn_RegABB);
-		gridPane.add(abbBtn, 1, 4);
 		
-		btn_RegABB.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0)
-			{
-				System.out.println("Abbruch Button");
-			}
-		});	
-*/
 		Button btn_reg = new Button("Registrierung");
 		HBox regBtn = new HBox(10);
 		regBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -100,11 +85,13 @@ public class passwortWindow extends Application {
 			
 			@Override
 			public void handle(ActionEvent event)
-			{   stage = new Stage();
+			{  			
+				stage = new Stage();
 		        //Starten des nächsten Fensters
 		       	registrationWindow regWin = new registrationWindow();
 		       	regWin.start(stage);
 				System.out.println("Registrierung Button");
+
 			}
 
 		});
@@ -182,64 +169,40 @@ public class passwortWindow extends Application {
     	gridPane.setPadding(new Insets(25, 25, 25, 25));
     }
     
- // Connection database
- 	private static boolean pwEqual(String user, String pw)
+
+	private static boolean pwEqual(String user, String pw)
  	{
  		Connection c;
  		String pwInput = null;
  		try
  		{
- 			
+ 			/**
+ 			 * @ TODO Wenn kein User eingeben wird werden Fehler geschmießen. Dies muss noch abgefangen werden.
+ 			 * 
+ 			 * 
+ 			 */
  			c = DBConnection.connect();
- 			String SQL = "SELECT DISTINCT pw,Username from accounts WHERE Username = 'User99'";
- 			//System.out.println("Zusammengesetzter String lautet: "+SQL);
- 			//String SQL = "SELECT * from tb_user";
+ 			String SQL = "SELECT DISTINCT password,user from tb_user WHERE user = '"+user+"'";
+ 			System.out.println("Zusammengesetzter String lautet: "+SQL);
+ 			
  			// ResultSet
  			ResultSet rs = c.createStatement().executeQuery(SQL);
- 			/**********************************
- 			 * TABLE COLUMN ADDED DYNAMICALLY *
- 			 **********************************
- 			for (int i = 0; i < rs.getMetaData().getColumnCount(); i++)
- 			{
- 				// We are using non property style for making dynamic table
- 				final int j = i;
- 				TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
- 				col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
- 					public ObservableValue<String> call(
- 							CellDataFeatures<ObservableList, String> param)
- 					{
- 						return new SimpleStringProperty(param.getValue().get(j).toString());
- 					}
- 				});
- 				tableview.getColumns().addAll(col);
- 			}
- 			/********************************
- 			 * Data added to ObservableList *
- 			 ********************************/
  			
  			while (rs.next())
  			{
- 				// Iterate Row
- 				//ObservableList<String> row = FXCollections.observableArrayList();
- 				// Iterate Column
 				pwInput = rs.getString(1);
- 				 /*
- 				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
- 				{
- 					// Iterate Column
- 					row.add(rs.getString(i));
- 				} */
+
  				//System.out.println("Result: "+rs.getString(1));  			
  			} 
- 			// FINALLY ADDED TO TableView
-			
+ 					
  		} catch (Exception e)
  		{
  			e.printStackTrace();
  			System.out.println("Error on Building Data");
  		}
- 		//if(pwInput == pw) {
+ 		
  		if(pwInput.equals(pw)) {
+
  			return true;
  		}
  		return false;

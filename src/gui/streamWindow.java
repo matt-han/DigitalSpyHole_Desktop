@@ -21,7 +21,7 @@ public class streamWindow {
 	private Stage stage;
 	//private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
 	
-	private static final String MEDIA_URL = "http://192.168.178.27:8080/video/mjpg.cgi";
+	private static final String MEDIA_URL = "http://192.168.1.100:1900/static_simple.html";
     private static String arg1;
 	
     public void start(Stage primaryStage) {

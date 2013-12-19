@@ -6,11 +6,15 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	private static Connection conn;
-	private static String url = "jdbc:mysql://localhost:3306/test";
-	//private static String url = "jdbc:mysql://spyhole.no-ip.biz:3306/test";
+	/*
+	private static String url = "jdbc:mysql://localhost:3306/db_spyhole";
 	private static String user = "root";// Username of database
 	private static String pass = "";// Password of database
-
+	*/
+	private static String url = "jdbc:mysql://spyhole.no-ip.biz:1901/db_spyhole";	
+	private static String user = "pi";	// Username of database
+	private static String pass = "beuthspyhole";		// Password of database
+	
 	public static Connection connect() throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();

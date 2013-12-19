@@ -34,6 +34,8 @@ public class dataWindow {
 		btnStream.setAlignment(Pos.CENTER);
 		btnStream.getChildren().add(btn_stream);
 		gridPane.add(btnStream, 5, 0);
+		
+		
 		btn_stream.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -52,6 +54,8 @@ public class dataWindow {
         data_btn.setAlignment(Pos.CENTER);
         data_btn.getChildren().add(btn_data);
 		gridPane.add(data_btn, 5, 1);
+		
+		
 		btn_data.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
@@ -70,6 +74,9 @@ public class dataWindow {
         btnOpen.setAlignment(Pos.CENTER);
         btnOpen.getChildren().add(btn_open);
 		gridPane.add(btnOpen, 5, 2);
+		
+		
+		
 		btn_open.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
