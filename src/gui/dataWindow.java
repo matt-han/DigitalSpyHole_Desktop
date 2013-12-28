@@ -2,19 +2,24 @@ package gui;
 
 import dataBase.DisplayDatabase;
 import gui.streamWindow;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class dataWindow {
+
+public class dataWindow<MyIntegerTableCell> {
 	private GridPane gridPane;
 	private Stage stage;
 	
@@ -23,6 +28,7 @@ public class dataWindow {
 	
 	public void start(Stage primaryStage)
 	{
+		int i;
 		initGridPaneButtons();
 
 		primaryStage.setTitle("Datenbank");
@@ -88,6 +94,27 @@ public class dataWindow {
            */
             }
         }); 
+		
+        Button btn_openPicture = new Button("Open Picture");
+        btn_openPicture.setDisable(true);
+        HBox btnOpenPicture = new HBox(10);
+        btnOpenPicture.setAlignment(Pos.CENTER);
+        btnOpenPicture.getChildren().add(btn_openPicture);
+		gridPane.add(btnOpenPicture, 5, 5);
+		
+		
+		
+		btn_openPicture.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+           /* 	stage = new Stage();
+            	//Starten des nächsten Fensters
+            	StartWindow2 sw2 = new StartWindow2();
+            	sw2.start(stage);
+           */
+            }
+        }); 
 
 		/*********************** Table *****************************************************************/
 		tableview = new TableView();
@@ -96,8 +123,32 @@ public class dataWindow {
 		dataTable.setAlignment(Pos.CENTER);
 		dataTable.getChildren().add(tableview);
 		//gridPane.add(dataTable,0,0);
-		gridPane.add(tableview, 0, 0, 1, 4);
+		gridPane.add(dataTable, 0, 0, 1, 4);
 		
+		/*********************** ComboBox **************************************************************/
+		
+		Label choiceRow = new Label("ID für Foto:");
+		HBox txtBox = new HBox(10);
+		txtBox.setAlignment(Pos.CENTER);
+		txtBox.getChildren().add(choiceRow);
+		gridPane.add(choiceRow, 5, 3);
+		
+		final ComboBox<Integer> comboBox = new ComboBox();
+		
+		for(i = 1;i<=DisplayDatabase.getTableRow();i++)
+		{
+			comboBox.getItems().addAll(i);
+		}
+		
+		if(i > 1) {
+			btn_openPicture.setDisable(false);
+		}
+				
+		//System.out.println("comboBox: "+comboBox.getValue());
+		HBox coiceBox = new HBox(10);
+		coiceBox.setAlignment(Pos.CENTER);
+		coiceBox.getChildren().add(comboBox);
+		gridPane.add(comboBox, 5, 4);
 		
 		StackPane root = new StackPane();
 		root.getChildren().addAll(gridPane);
@@ -115,5 +166,5 @@ public class dataWindow {
 		gridPane.setVgap(5);
 		gridPane.setPadding(new Insets(20, 20, 20, 20));
 	}
-
+	
 }

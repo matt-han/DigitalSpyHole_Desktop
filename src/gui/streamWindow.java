@@ -1,5 +1,7 @@
 package gui;
 
+import java.net.URI;
+
 import gui.dataWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +23,8 @@ public class streamWindow {
 	private Stage stage;
 	//private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
 	
-	private static final String MEDIA_URL = "http://192.168.1.100:1900/static_simple.html";
+	//private static final String MEDIA_URL = "http://spyhole.no-ip.biz:1900/?action=stream";
+	private static final String MEDIA_URL = "http://192.168.178.27:8080/";
     private static String arg1;
 	
     public void start(Stage primaryStage) {
@@ -88,9 +91,11 @@ public class streamWindow {
            */
             }
         }); 
-
+		
+	
         // create media player
-        Media media = new Media((arg1 != null) ? arg1 : MEDIA_URL);
+        //Media media = new Media((arg1 != null) ? arg1 : MEDIA_URL);
+		Media media = new Media(MEDIA_URL);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         
@@ -98,7 +103,8 @@ public class streamWindow {
         MediaView mediaView = new MediaView(mediaPlayer);
        // ((Group)scene.getRoot()).getChildren().add(mediaView);
         gridPane.add(mediaView, 0, 0, 5, 35);
-       
+     	
+	
         StackPane root = new StackPane();
         root.getChildren().addAll(gridPane);
         primaryStage.setScene(new Scene(root, 750, 450));

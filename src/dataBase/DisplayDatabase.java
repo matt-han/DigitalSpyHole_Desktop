@@ -16,18 +16,25 @@ import javafx.util.Callback;
 public class DisplayDatabase {
 	// Tableview and data
 	private static ObservableList<ObservableList> data;
+	private static int complRow;
+	
+	public static int getTableRow()
+	{
+		return complRow;
+	}
 
 	// Connection database
 	public static void buildData(TableView tableview)
 	{
 		Connection c;
 		data = FXCollections.observableArrayList();
+		complRow = 0;
 		try
 		{
-			//c = DBConnectFlogger.connect();
+			
 			c = DBConnection.connect();
 			String SQL = "SELECT * from tb_user";
-			//String SQL = "SELECT * from tb_user";
+			
 			// ResultSet
 			ResultSet rs = c.createStatement().executeQuery(SQL);
 			/**********************************
@@ -61,6 +68,7 @@ public class DisplayDatabase {
 				}
 				System.out.println("Row added "+row );
 				data.add(row);
+				complRow++;
 			}
 			// FINALLY ADDED TO TableView
 			tableview.setItems(data);
@@ -69,5 +77,6 @@ public class DisplayDatabase {
 			e.printStackTrace();
 			System.out.println("Error on Building Data");
 		}
+		
 	}
 }

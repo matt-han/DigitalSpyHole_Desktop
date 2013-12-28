@@ -4,6 +4,7 @@ package gui;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
+import dataBase.DBImgSave;
 import dataBase.DBConnection;
 import gui.registrationWindow;
 import javafx.application.Application;
@@ -92,6 +93,29 @@ public class passwortWindow extends Application {
 		       	regWin.start(stage);
 				System.out.println("Registrierung Button");
 
+			}
+
+		});
+		
+		Button btn_Image = new Button("ViewImage");
+		HBox imgBtn = new HBox(10);
+		imgBtn.setAlignment(Pos.BOTTOM_RIGHT);
+		imgBtn.getChildren().add(btn_Image);
+		gridPane.add(imgBtn, 2, 4);
+		
+		btn_Image.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event)
+			{  			
+				stage = new Stage();
+		        //Starten des nächsten Fensters
+		       	imageViewWindow imgWin = new imageViewWindow();
+		       	imgWin.start(stage);
+				System.out.println("ImageView Button");
+				
+			//	DBImgSave imgSave = new DBImgSave();
+			//	imgSave.inputPictureDB();
 			}
 
 		});
