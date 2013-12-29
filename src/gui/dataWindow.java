@@ -107,6 +107,7 @@ public class dataWindow<MyIntegerTableCell> {
 	
 		/*********************** Table *****************************************************************/
 		tableview = new TableView();
+		tableview.setEditable(false);
 		DisplayDatabase.buildData(tableview);
 		HBox dataTable = new HBox(10);
 		dataTable.setAlignment(Pos.CENTER);

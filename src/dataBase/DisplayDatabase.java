@@ -33,7 +33,7 @@ public class DisplayDatabase {
 		{
 			
 			c = DBConnection.connect();
-			String SQL = "SELECT * from tb_user";
+			String SQL = "SELECT * from tb_doorlogger";
 			
 			// ResultSet
 			ResultSet rs = c.createStatement().executeQuery(SQL);

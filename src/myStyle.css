@@ -28,3 +28,11 @@
 	-fx-background-color: linear-gradient(#2A5058, #61a2b1);
 	-fx-text-fill: #ffffff;	
 }
+
+.table-row-cell:empty {
+    -fx-background-color: lightyellow;
+}
+ 
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
