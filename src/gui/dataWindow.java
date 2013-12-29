@@ -2,7 +2,6 @@ package gui;
 
 import dataBase.DisplayDatabase;
 import gui.streamWindow;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -23,12 +21,14 @@ public class dataWindow<MyIntegerTableCell> {
 	private GridPane gridPane;
 	private Stage stage;
 	
+	@SuppressWarnings("rawtypes")
 	private TableView tableview;
 
 	
+	@SuppressWarnings("rawtypes")
 	public void start(Stage primaryStage)
 	{
-		int i;
+		int i=0;
 		initGridPaneButtons();
 
 		primaryStage.setTitle("Datenbank");
@@ -64,7 +64,8 @@ public class dataWindow<MyIntegerTableCell> {
 		
 		btn_data.setOnAction(new EventHandler<ActionEvent>() {
  
-            @Override
+            
+			@Override
             public void handle(ActionEvent event) {
             	stage = new Stage();
             	//Starten des nächsten Fensters
@@ -103,19 +104,7 @@ public class dataWindow<MyIntegerTableCell> {
 		gridPane.add(btnOpenPicture, 5, 5);
 		
 		
-		
-		btn_openPicture.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-           /* 	stage = new Stage();
-            	//Starten des nächsten Fensters
-            	StartWindow2 sw2 = new StartWindow2();
-            	sw2.start(stage);
-           */
-            }
-        }); 
-
+	
 		/*********************** Table *****************************************************************/
 		tableview = new TableView();
 		DisplayDatabase.buildData(tableview);
@@ -143,7 +132,20 @@ public class dataWindow<MyIntegerTableCell> {
 		if(i > 1) {
 			btn_openPicture.setDisable(false);
 		}
-				
+		
+		/*********************** Button Event für die ComboBox ******************************************/
+		btn_openPicture.setOnAction(new EventHandler<ActionEvent>() {
+			 
+            @Override
+            public void handle(ActionEvent event) {
+				stage = new Stage();
+		        //Starten des nächsten Fensters
+		       	imageViewWindow imgWin = new imageViewWindow();
+		       	imgWin.start(stage,comboBox.getValue());
+				System.out.println("ImageView Button");
+            }
+        });
+		/*********************** ComboBox **************************************************************/		
 		//System.out.println("comboBox: "+comboBox.getValue());
 		HBox coiceBox = new HBox(10);
 		coiceBox.setAlignment(Pos.CENTER);

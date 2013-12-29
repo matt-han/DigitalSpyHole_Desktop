@@ -97,7 +97,7 @@ public class passwortWindow extends Application {
 
 		});
 		
-		Button btn_Image = new Button("ViewImage");
+		Button btn_Image = new Button("SaveImage");
 		HBox imgBtn = new HBox(10);
 		imgBtn.setAlignment(Pos.BOTTOM_RIGHT);
 		imgBtn.getChildren().add(btn_Image);
@@ -111,8 +111,8 @@ public class passwortWindow extends Application {
 				stage = new Stage();
 		        //Starten des nächsten Fensters
 		       	imageViewWindow imgWin = new imageViewWindow();
-		       	imgWin.start(stage);
-				System.out.println("ImageView Button");
+		       	imgWin.start(stage,2);
+				System.out.println("ImageSave Button");
 				
 			//	DBImgSave imgSave = new DBImgSave();
 			//	imgSave.inputPictureDB();

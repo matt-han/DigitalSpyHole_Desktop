@@ -17,7 +17,7 @@ public class imageViewWindow {
 	
 
 	
-	public void start(Stage primaryStage)
+	public void start(Stage primaryStage, int userID)
 	{
 		
 		primaryStage.setTitle("ImageView");
@@ -32,7 +32,7 @@ public class imageViewWindow {
         {
         	
         	//Foto aus DB holen 
-        	byte[] imgData = imgShow.getImageDB();
+        	byte[] imgData = imgShow.getImageDB(userID);
         	
         	System.out.println("Länge at DB: " + imgData.length);
         	
