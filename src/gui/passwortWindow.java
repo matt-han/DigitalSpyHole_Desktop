@@ -40,7 +40,7 @@ public class passwortWindow extends Application {
 	}
 
 	@Override
-	public void start(Stage pwWind)
+	public void start(final Stage pwWind)
 	{
 		initGridPane();
 		txtRegis();
@@ -71,6 +71,7 @@ public class passwortWindow extends Application {
 	            	streamWindow strWin = new streamWindow();
 	            	strWin.start(stage);        
 					System.out.println("OK Button");
+					pwWind.close();
 			//	}
 				
 			}
@@ -91,6 +92,7 @@ public class passwortWindow extends Application {
 		        //Starten des nächsten Fensters
 		       	registrationWindow regWin = new registrationWindow();
 		       	regWin.start(stage);
+		       	pwWind.close();
 				System.out.println("Registrierung Button");
 
 			}
@@ -113,6 +115,7 @@ public class passwortWindow extends Application {
 		       	imageViewWindow imgWin = new imageViewWindow();
 		       	imgWin.start(stage,2);
 				System.out.println("ImageSave Button");
+				pwWind.close();
 				
 			//	DBImgSave imgSave = new DBImgSave();
 			//	imgSave.inputPictureDB();

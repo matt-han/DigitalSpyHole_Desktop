@@ -21,19 +21,15 @@ public class streamWindow {
 	
 	private GridPane gridPane;
 	private Stage stage;
-	//private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
+	private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
 	
 	//private static final String MEDIA_URL = "http://spyhole.no-ip.biz:1900/?action=stream";
-	private static final String MEDIA_URL = "http://192.168.178.27:8080/";
+	//private static final String MEDIA_URL = "http://192.168.178.27:8080/";
     private static String arg1;
 	
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
     	
     	initGridPaneButtons();
-    	
-    //	TextArea txtOutput = new TextArea(); 	
-    //	txtOutput.getStyleClass().add("txt_Stream");
-	//	gridPane.add(txtOutput, 0, 1);
     	
         primaryStage.setTitle("Stream");
         
@@ -44,35 +40,15 @@ public class streamWindow {
 		btnStream.setAlignment(Pos.CENTER);
 		btnStream.getChildren().add(btn_stream);
 		gridPane.add(btnStream, 5, 0);
-		btn_stream.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event)
-			{
-				stage = new Stage();
-				// Starten des nächsten Fensters
-				streamWindow streamWin = new streamWindow();
-				streamWin.start(stage);
-			}
-		});
 		
-        Button btn_data = new Button("Datenbase");
+        Button btn_data = new Button("Database");
         btn_data.setDisable(false);
         HBox data_btn = new HBox(10);
         data_btn.setAlignment(Pos.CENTER);
         data_btn.getChildren().add(btn_data);
 		gridPane.add(data_btn, 5, 1);
-		btn_data.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-            	stage = new Stage();
-            	//Starten des nächsten Fensters
-            	dataWindow dataWin = new dataWindow();
-            	dataWin.start(stage);
-           
-            }
-        });
+
 		
         Button btn_open = new Button("Open");
         btn_open.setDisable(false);
@@ -92,25 +68,41 @@ public class streamWindow {
             }
         }); 
 		
-	
+		/*********************** Media Stream **********************************************************/
         // create media player
-        //Media media = new Media((arg1 != null) ? arg1 : MEDIA_URL);
-		Media media = new Media(MEDIA_URL);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        Media media = new Media((arg1 != null) ? arg1 : MEDIA_URL);
+        final MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         
         // create mediaView and add media player to the viewer
         MediaView mediaView = new MediaView(mediaPlayer);
        // ((Group)scene.getRoot()).getChildren().add(mediaView);
         gridPane.add(mediaView, 0, 0, 5, 35);
+        
+        /** Database Button */
+		btn_data.setOnAction(new EventHandler<ActionEvent>() {
+			 
+            @Override
+            public void handle(ActionEvent event) {
+            	stage = new Stage();
+            	//Starten des nächsten Fensters
+            	dataWindow dataWin = new dataWindow();
+            	dataWin.start(stage);
+            	//mediaPlayer.setMute(true);
+            	mediaPlayer.stop();
+            	primaryStage.close();
+           
+            }
+        });
      	
-	
+        /*********************** Fenster Eigenschaften *************************************************/
         StackPane root = new StackPane();
         root.getChildren().addAll(gridPane);
         primaryStage.setScene(new Scene(root, 750, 450));
         root.getStylesheets().add("myStyle.css");
         primaryStage.show();
-   
+        /***********************************************************************************************/
+
 	}
         
     private void initGridPaneButtons()

@@ -44,7 +44,6 @@ public class imageViewWindow {
         	System.out.println("Width at img2: " + img2.getWidth());
         	System.out.println("Height at img2: " + img2.getHeight());
         	imageView.setImage(img2);
-//        	ImageIO.write(bufImg, "jpg", new File("d:/new-darksouls.jpg"));
        
         }
         catch (Exception e)
@@ -56,11 +55,12 @@ public class imageViewWindow {
         
         
         sp.getChildren().add(imageView);
-        
+        /*********************** Fenster Eigenschaften *************************************************/
         //Adding HBox to the scene
         Scene scene = new Scene(sp);
         primaryStage.setScene(scene);
         primaryStage.show();
+        /***********************************************************************************************/
 	}
 
 }

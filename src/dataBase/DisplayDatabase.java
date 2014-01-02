@@ -3,6 +3,7 @@ package dataBase;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,7 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
-//import mtechproject.dbfrontend.DBConnectFlogger;
+
 
 public class DisplayDatabase {
 	// Tableview and data

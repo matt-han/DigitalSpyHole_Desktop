@@ -28,7 +28,7 @@ public class registrationWindow extends Application {
 	private Timestamp timestamp;
 
 	@Override
-	public void start(Stage regisStage)
+	public void start(final Stage regisStage)
 	{
 
 		initGridPane();
@@ -166,6 +166,7 @@ public class registrationWindow extends Application {
 				// Starten des nächsten Fensters
 				passwortWindow pwWind = new passwortWindow();
 				pwWind.start(stage);
+				regisStage.close();
 			}
 		});
 

@@ -4,6 +4,7 @@ import dataBase.DisplayDatabase;
 import gui.streamWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -26,11 +27,11 @@ public class dataWindow<MyIntegerTableCell> {
 
 	
 	@SuppressWarnings("rawtypes")
-	public void start(Stage primaryStage)
+	public void start(final Stage primaryStage)
 	{
 		int i=0;
 		initGridPaneButtons();
-
+		
 		primaryStage.setTitle("Datenbank");
 
 		/*********************** Buttons ***************************************************************/       
@@ -51,6 +52,7 @@ public class dataWindow<MyIntegerTableCell> {
 				// Starten des nächsten Fensters
 				streamWindow streamWin = new streamWindow();
 				streamWin.start(stage);
+				primaryStage.close();
 			}
 		});
 		
@@ -62,19 +64,6 @@ public class dataWindow<MyIntegerTableCell> {
 		gridPane.add(data_btn, 5, 1);
 		
 		
-		btn_data.setOnAction(new EventHandler<ActionEvent>() {
- 
-            
-			@Override
-            public void handle(ActionEvent event) {
-            	stage = new Stage();
-            	//Starten des nächsten Fensters
-            	dataWindow dataWin = new dataWindow();
-            	dataWin.start(stage);
-           
-            }
-        });
-		
         Button btn_open = new Button("Open");
         btn_open.setDisable(true);
         HBox btnOpen = new HBox(10);
@@ -83,45 +72,22 @@ public class dataWindow<MyIntegerTableCell> {
 		gridPane.add(btnOpen, 5, 2);
 		
 		
-		
-		btn_open.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-           /* 	stage = new Stage();
-            	//Starten des nächsten Fensters
-            	StartWindow2 sw2 = new StartWindow2();
-            	sw2.start(stage);
-           */
-            }
-        }); 
-		
         Button btn_openPicture = new Button("Open Picture");
         btn_openPicture.setDisable(true);
         HBox btnOpenPicture = new HBox(10);
         btnOpenPicture.setAlignment(Pos.CENTER);
         btnOpenPicture.getChildren().add(btn_openPicture);
 		gridPane.add(btnOpenPicture, 5, 5);
-		
-		
-	
-		/*********************** Table *****************************************************************/
-		tableview = new TableView();
-		tableview.setEditable(false);
-		DisplayDatabase.buildData(tableview);
-		HBox dataTable = new HBox(10);
-		dataTable.setAlignment(Pos.CENTER);
-		dataTable.getChildren().add(tableview);
-		//gridPane.add(dataTable,0,0);
-		gridPane.add(dataTable, 0, 0, 1, 4);
+
 		
 		/*********************** ComboBox **************************************************************/
 		
 		Label choiceRow = new Label("ID für Foto:");
+		gridPane.setHalignment(choiceRow, HPos.RIGHT);
 		HBox txtBox = new HBox(10);
-		txtBox.setAlignment(Pos.CENTER);
+		txtBox.setAlignment(Pos.CENTER_RIGHT);
 		txtBox.getChildren().add(choiceRow);
-		gridPane.add(choiceRow, 5, 3);
+		gridPane.add(choiceRow, 5, 4);
 		
 		final ComboBox<Integer> comboBox = new ComboBox();
 		
@@ -148,16 +114,28 @@ public class dataWindow<MyIntegerTableCell> {
         });
 		/*********************** ComboBox **************************************************************/		
 		//System.out.println("comboBox: "+comboBox.getValue());
-		HBox coiceBox = new HBox(10);
+		HBox coiceBox = new HBox(1);
 		coiceBox.setAlignment(Pos.CENTER);
 		coiceBox.getChildren().add(comboBox);
-		gridPane.add(comboBox, 5, 4);
+		gridPane.add(comboBox, 5, 3);
+		//gridPane.add(comboBox, 5, 3, 5, 1);
 		
+		/*********************** Table *****************************************************************/
+		tableview = new TableView();
+		tableview.setEditable(false);
+		DisplayDatabase.buildData(tableview);
+		HBox dataTable = new HBox(10);
+		dataTable.setAlignment(Pos.CENTER);
+		dataTable.getChildren().add(tableview);
+		gridPane.add(dataTable, 0, 0, 1, 7);
+		
+		/*********************** Fenster Eigenschaften *************************************************/
 		StackPane root = new StackPane();
 		root.getChildren().addAll(gridPane);
 		primaryStage.setScene(new Scene(root, 750, 450));
 		root.getStylesheets().add("myStyle.css");
 		primaryStage.show();
+		/***********************************************************************************************/
 
 	}
 
