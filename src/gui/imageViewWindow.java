@@ -41,8 +41,7 @@ public class imageViewWindow {
         	System.out.println("Height at bufImg: " + bufImg.getHeight());
         	WritableImage img2 = new WritableImage(bufImg.getWidth(),bufImg.getHeight());
         	SwingFXUtils.toFXImage(bufImg, img2);
-        	System.out.println("Width at img2: " + img2.getWidth());
-        	System.out.println("Height at img2: " + img2.getHeight());
+
         	imageView.setImage(img2);
        
         }

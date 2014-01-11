@@ -17,14 +17,14 @@ public class DBImgSave {
 		PreparedStatement st = null;
 		try
 		{
-			File fl = new File("img/me.jpg"); // imgFile
+			File fl = new File("img/1.png"); // imgFile
 			fis = new FileInputStream(fl);
 			c = DBConnection.connect();
 
 			
 			/**  ID  dI_ID  U_ID  imgdata  imgtype          **/
 			
-			st = c.prepareStatement("UPDATE testimage set imgdata = ? WHERE ID=2");
+			st = c.prepareStatement("UPDATE tb_images set imgdata = ? WHERE ID=1");
 			//String SQL = "INSERT INTO tb_user VALUES (null,'"+ txtVorname.getText() + "', '"+ txtNachname.getText() + "', '"+ txtEmail.getText() + "', '"+ txtUserName.getText() + "', '"+ txtPw.getText() + "', '" + timestamp+ "')";
 			//st = c.prepareStatement("INSERT INTO tb_images VALUES (null,'3','2',' imgdata = ?','jpg')");
 			st.setBinaryStream(1, fis, (int) fl.length()); // imgFile

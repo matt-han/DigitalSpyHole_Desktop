@@ -112,9 +112,8 @@ public class registrationWindow extends Application {
 							c = DBConnection.connect();
 
 							timestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
-							System.out.println("First: " + timestamp);
 							String dateFormat = timestamp.toString();
-							System.out.println("Second: " + dateFormat);
+							System.out.println("Timestamp: " + dateFormat);
 
 							//SQL-Befehl mit den angegebenen Daten für die Datenbank
 							String SQL = "INSERT INTO tb_user VALUES (null,'"
@@ -124,7 +123,7 @@ public class registrationWindow extends Application {
 									+ txtUserName.getText() + "', '"
 									+ txtPw.getText() + "', '" + timestamp
 									+ "')";
-							System.out.println("Zusammengesetzter String lautet: "+ SQL);
+							System.out.println("Input DB user: "+ SQL);
 
 							
 							//Eintrag in die Datenbank

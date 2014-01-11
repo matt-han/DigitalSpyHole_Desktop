@@ -1,7 +1,11 @@
 package gui;
 
 import java.net.URI;
+import java.sql.Connection;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
+import dataBase.DBConnection;
 import gui.dataWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,9 +25,10 @@ public class streamWindow {
 	
 	private GridPane gridPane;
 	private Stage stage;
-	private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
+	private Timestamp timestamp;
+	//private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
 	
-	//private static final String MEDIA_URL = "http://spyhole.no-ip.biz:1900/?action=stream";
+	private static final String MEDIA_URL = "http://spyhole.no-ip.biz:1900/?action=stream";
 	//private static final String MEDIA_URL = "http://192.168.178.27:8080/";
     private static String arg1;
 	
@@ -60,11 +65,7 @@ public class streamWindow {
  
             @Override
             public void handle(ActionEvent event) {
-           /* 	stage = new Stage();
-            	//Starten des nächsten Fensters
-            	StartWindow2 sw2 = new StartWindow2();
-            	sw2.start(stage);
-           */
+            	inputDbOpenDoor();
             }
         }); 
 		
@@ -112,6 +113,38 @@ public class streamWindow {
     	gridPane.setHgap(30);
     	gridPane.setVgap(10);
     	gridPane.setPadding(new Insets(0, 25, 0, 25));
+    }
+    
+    private void inputDbOpenDoor()
+    {
+    	Connection c;
+		try
+		{
+
+			c = DBConnection.connect();
+
+			timestamp = new Timestamp(Calendar.getInstance().getTime().getTime());
+			String dateFormat = timestamp.toString();
+			System.out.println("Timestamp: " + dateFormat);
+
+			//SQL-Befehl mit den angegebenen Daten für die Datenbank
+			String SQL = "INSERT INTO tb_doorlogger VALUES (null,'1','" + timestamp +"')";
+			System.out.println("Input DB Doorlogger: "+ SQL);
+
+			
+			//Eintrag in die Datenbank
+			if (c.createStatement().executeUpdate(SQL) <= 0)
+			{
+				System.out.println("Es wurde nix in die Datenbank eingetragen.");
+			}
+
+			System.out.println("Eintrag in die DB: ");
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("Error on Building Data");
+		}
     }
     
 	

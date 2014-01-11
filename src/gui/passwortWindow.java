@@ -62,7 +62,7 @@ public class passwortWindow extends Application {
 				pwAnm = passwordField.getText();
 				
 				System.out.println("userAnm: "+userAnm);
-				System.out.println("Anm: "+pwAnm);
+				System.out.println("PW: "+pwAnm);
 				
 			//	if(pwEqual(userAnm, pwAnm)== true) {
 					// Wenn login korrekt nächste Scene anzeigen. Datenbank Abfrage!!!!
@@ -70,9 +70,9 @@ public class passwortWindow extends Application {
 	            	//Starten des nächsten Fensters
 	            	streamWindow strWin = new streamWindow();
 	            	strWin.start(stage);        
-					System.out.println("OK Button");
 					pwWind.close();
 			//	}
+				
 				
 			}
 		});
@@ -93,12 +93,10 @@ public class passwortWindow extends Application {
 		       	registrationWindow regWin = new registrationWindow();
 		       	regWin.start(stage);
 		       	pwWind.close();
-				System.out.println("Registrierung Button");
-
 			}
 
 		});
-		
+		/*
 		Button btn_Image = new Button("SaveImage");
 		HBox imgBtn = new HBox(10);
 		imgBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -112,17 +110,17 @@ public class passwortWindow extends Application {
 			{  			
 				stage = new Stage();
 		        //Starten des nächsten Fensters
-		       	imageViewWindow imgWin = new imageViewWindow();
-		       	imgWin.start(stage,2);
+		      // 	imageViewWindow imgWin = new imageViewWindow();
+		      // 	imgWin.start(stage,2);
 				System.out.println("ImageSave Button");
 				pwWind.close();
 				
-			//	DBImgSave imgSave = new DBImgSave();
-			//	imgSave.inputPictureDB();
+				DBImgSave imgSave = new DBImgSave();
+				imgSave.inputPictureDB();
 			}
 
 		});
-		
+		*/
 	/*********************** Fenster Eigenschaften *************************************************/	
 		pwWind.setTitle("Login");	
         StackPane root = new StackPane();
@@ -201,6 +199,18 @@ public class passwortWindow extends Application {
  	{
  		Connection c;
  		String pwInput = null;
+ 		
+ 		if(user.length() <=0 )
+ 		{
+ 			System.out.println("Bitte User eingeben");
+ 			return false;
+ 		}
+ 		if(pw.length() <=0 )
+ 		{
+ 			System.out.println("Bitte Passwort eingeben");
+ 			return false;
+ 		}
+ 		
  		try
  		{
  			/**

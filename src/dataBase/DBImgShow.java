@@ -16,7 +16,7 @@ public class DBImgShow {
 	    
 		try
 		{
-			String SQL = "SELECT * FROM testimage WHERE ID = "+userID;
+			String SQL = "SELECT * FROM tb_images WHERE ID = "+userID;
 			c = DBConnection.connect();
 
 			Statement st = c.createStatement();		

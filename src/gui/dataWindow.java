@@ -79,6 +79,14 @@ public class dataWindow<MyIntegerTableCell> {
         btnOpenPicture.getChildren().add(btn_openPicture);
 		gridPane.add(btnOpenPicture, 5, 5);
 
+		/*********************** Table *****************************************************************/
+		tableview = new TableView();
+		tableview.setEditable(false);
+		DisplayDatabase.buildData(tableview);
+		HBox dataTable = new HBox(10);
+		dataTable.setAlignment(Pos.CENTER);
+		dataTable.getChildren().add(tableview);
+		gridPane.add(dataTable, 0, 0, 1, 7);
 		
 		/*********************** ComboBox **************************************************************/
 		
@@ -109,34 +117,23 @@ public class dataWindow<MyIntegerTableCell> {
 		        //Starten des nächsten Fensters
 		       	imageViewWindow imgWin = new imageViewWindow();
 		       	imgWin.start(stage,comboBox.getValue());
-				System.out.println("ImageView Button");
             }
         });
+		
 		/*********************** ComboBox **************************************************************/		
-		//System.out.println("comboBox: "+comboBox.getValue());
 		HBox coiceBox = new HBox(1);
 		coiceBox.setAlignment(Pos.CENTER);
 		coiceBox.getChildren().add(comboBox);
 		gridPane.add(comboBox, 5, 3);
 		//gridPane.add(comboBox, 5, 3, 5, 1);
 		
-		/*********************** Table *****************************************************************/
-		tableview = new TableView();
-		tableview.setEditable(false);
-		DisplayDatabase.buildData(tableview);
-		HBox dataTable = new HBox(10);
-		dataTable.setAlignment(Pos.CENTER);
-		dataTable.getChildren().add(tableview);
-		gridPane.add(dataTable, 0, 0, 1, 7);
-		
 		/*********************** Fenster Eigenschaften *************************************************/
 		StackPane root = new StackPane();
 		root.getChildren().addAll(gridPane);
 		primaryStage.setScene(new Scene(root, 750, 450));
-		root.getStylesheets().add("myStyle.css");
+		root.getStylesheets().add("myStyle.css");		
 		primaryStage.show();
 		/***********************************************************************************************/
-
 	}
 
 	private void initGridPaneButtons()
