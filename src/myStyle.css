@@ -1,20 +1,32 @@
 @CHARSET "ISO-8859-1";
 
 .root {
-	-fx-spacing: 10;
-	-fx-background-color:#808080;
-	-fx-padding: 10;
+	-fx-background-image: url("background.jpg");
 }
 
-.txt_Login {
+.txt_title {
+	/*
 	-fx-font-size: 20px;
 	-fx-font-weight: bold;
+	*/
+	-fx-font-size: 32px;
+   -fx-font-family: "Arial Black"; 
+   -fx-fill: #818181;
+   -fx-effect: innershadow(  three-pass-box  , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
+
+.txt_label_login {
+	-fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
 
 .txt_Stream {
 	-fx-font-size: 20px;
 	-fx-font-weight: bold;
-	-fx-background-color:#FFFFFF;
+	-fx-background-color:#FF0000;
 }
 
 .button {
@@ -35,4 +47,10 @@
  
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
+}
+
+.label-errMsg {
+  -fx-fill: FIREBRICK;
+  -fx-font-weight: bold;
+  -fx-text-fill: #ff0000;  
 }

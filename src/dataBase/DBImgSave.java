@@ -4,12 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.sql.*;
 
-//import com.mysql.jdbc.Connection;
-//import com.mysql.jdbc.PreparedStatement;
 
 public class DBImgSave {
 	public static void inputPictureDB()
-	//public static void main(String[] args)
 	{
 
 		FileInputStream fis = null;
@@ -25,8 +22,6 @@ public class DBImgSave {
 			/**  ID  dI_ID  U_ID  imgdata  imgtype          **/
 			
 			st = c.prepareStatement("UPDATE tb_images set imgdata = ? WHERE ID=1");
-			//String SQL = "INSERT INTO tb_user VALUES (null,'"+ txtVorname.getText() + "', '"+ txtNachname.getText() + "', '"+ txtEmail.getText() + "', '"+ txtUserName.getText() + "', '"+ txtPw.getText() + "', '" + timestamp+ "')";
-			//st = c.prepareStatement("INSERT INTO tb_images VALUES (null,'3','2',' imgdata = ?','jpg')");
 			st.setBinaryStream(1, fis, (int) fl.length()); // imgFile
 			
 			st.executeUpdate();

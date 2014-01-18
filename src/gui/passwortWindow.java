@@ -21,6 +21,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class passwortWindow extends Application {
@@ -32,6 +35,7 @@ public class passwortWindow extends Application {
 	private TextField userTextField;
 	private TextField pwTextField;
 	private PasswordField passwordField;
+	private Label errMsg = new Label();
 	
 	public static void main(String[] args)
 	{
@@ -63,19 +67,39 @@ public class passwortWindow extends Application {
 				
 				System.out.println("userAnm: "+userAnm);
 				System.out.println("PW: "+pwAnm);
-				
-			//	if(pwEqual(userAnm, pwAnm)== true) {
-					// Wenn login korrekt nächste Scene anzeigen. Datenbank Abfrage!!!!
+				/*
+		 		if(userAnm.length() <=0 )
+		 		{
+		 			errMsg.setText("Bitte User eingeben");
+		 			System.out.println("Bitte User eingeben");			
+		 		}
+		 		else if(pwAnm.length() <=0 )
+		 		{
+		 			errMsg.setText("Bitte Passwort eingeben");
+		 			System.out.println("Bitte Passwort eingeben");
+		 			
+		 		} else if(pwEqual(userAnm, pwAnm)== true) {			*/	
 	            	stage = new Stage();
+	            	
 	            	//Starten des nächsten Fensters
 	            	streamWindow strWin = new streamWindow();
 	            	strWin.start(stage);        
-					pwWind.close();
-			//	}
+					pwWind.close(); 								/*
+				}
+		 		else
+		 		{
+		 			errMsg.setText("Falsche Eingabe");
+		 			System.out.println("Falsche Eingabe");
+		 		}
+				*/
 				
 				
 			}
 		});
+		
+		errMsg = new Label("");
+		errMsg.getStyleClass().add("label-errMsg");
+		gridPane.add(errMsg, 1, 3);
 		
 		Button btn_reg = new Button("Registrierung");
 		HBox regBtn = new HBox(10);
@@ -96,6 +120,11 @@ public class passwortWindow extends Application {
 			}
 
 		});
+		
+		/**
+		 * Der folgende Button wurde für Testzwecke implementiert. Wenn dieser betätigt wird wird das
+		 * angegeben Foto in der DBImgSave Klasse binär in der Datenbank abgespeichert.
+		 */
 		/*
 		Button btn_Image = new Button("SaveImage");
 		HBox imgBtn = new HBox(10);
@@ -110,17 +139,14 @@ public class passwortWindow extends Application {
 			{  			
 				stage = new Stage();
 		        //Starten des nächsten Fensters
-		      // 	imageViewWindow imgWin = new imageViewWindow();
-		      // 	imgWin.start(stage,2);
 				System.out.println("ImageSave Button");
-				pwWind.close();
-				
+								
 				DBImgSave imgSave = new DBImgSave();
 				imgSave.inputPictureDB();
 			}
 
 		});
-		*/
+		 */	
 	/*********************** Fenster Eigenschaften *************************************************/	
 		pwWind.setTitle("Login");	
         StackPane root = new StackPane();
@@ -134,51 +160,51 @@ public class passwortWindow extends Application {
 	
 	private void txtRegis()
 	{
-		Label regis_text = new Label("Login");
-		regis_text.getStyleClass().add("txt_Login");
-		gridPane.add(regis_text, 0, 0, 2, 1);
 		
-		Label userName = new Label("Name:");
-		gridPane.add(userName, 0, 1);
+		/*********************** Labels ****************************************************************/
+		Text regis_txt = new Text("Login");
+		regis_txt.getStyleClass().add("txt_title");
+		gridPane.add(regis_txt, 0, 0, 2, 1);
 		
-		//TextField userTextField = new TextField();
+		Label userName_txt = new Label("Name:");
+		userName_txt.getStyleClass().add("txt_label_login");
+		gridPane.add(userName_txt, 0, 1);
+		
+		Label pw_txt = new Label("Password:");
+		pw_txt.getStyleClass().add("txt_label_login");
+		gridPane.add(pw_txt, 0, 2);
+		
+		/*********************** Textfeld **************************************************************/
 		userTextField = new TextField();
 		gridPane.add(userTextField, 1, 1);
 		
-		Label pw = new Label("Password:");
-		gridPane.add(pw, 0, 2);
-		
-		// text field to show password as unmasked
-		
-		//final TextField pwTextField = new TextField();
+		// Einfaches Textfeld wo das Passwort im Klartext angezeigt wird 
 		pwTextField = new TextField();
 		gridPane.add(pwTextField, 1, 2);
 		
-		// Set initial state
 		pwTextField.setManaged(false);
 		pwTextField.setVisible(false);
-
-		// Actual password field
-		//final PasswordField passwordField = new PasswordField();
+		
+		/*********************** Passwordfeld ***********************************************************/
+		// Passwortfeld was das eingegebene nur als Punkte darstellt
 		passwordField = new PasswordField();
 		gridPane.add(passwordField, 1, 2);
 
+		/*********************** CheckBox **************************************************************/
 		CheckBox checkBox = new CheckBox("Show/Hide");
 		gridPane.add(checkBox, 0, 3);
 
-		// Bind properties. Toggle textField and passwordField
-		// visibility and managability properties mutually when checkbox's state
-		// is changed.
-		// Because we want to display only one component (textField or
-		// passwordField)
-		// on the scene at a time.
+		// Eigenschaften des Textfelde und des Passwortfeldes werden mit
+		// der Checkbox verbunden. u.a. wechselt die Sichtbarkeit der 
+		// beiden Felder immer. Es soll immer nur ein Feld sichbar sein.
 		pwTextField.managedProperty().bind(checkBox.selectedProperty());
 		pwTextField.visibleProperty().bind(checkBox.selectedProperty());
 
 		passwordField.managedProperty().bind(checkBox.selectedProperty().not());
 		passwordField.visibleProperty().bind(checkBox.selectedProperty().not());
 
-		// Bind the textField and passwordField text values bidirectionally.
+		// Beide Felder werden mit einander bidirektional verbunden. So das 
+		// jedes Feld den selben Text enthält.
 		pwTextField.textProperty().bindBidirectional(
 				passwordField.textProperty());
 			
@@ -197,45 +223,30 @@ public class passwortWindow extends Application {
 
 	private static boolean pwEqual(String user, String pw)
  	{
+
  		Connection c;
  		String pwInput = null;
- 		
- 		if(user.length() <=0 )
- 		{
- 			System.out.println("Bitte User eingeben");
- 			return false;
- 		}
- 		if(pw.length() <=0 )
- 		{
- 			System.out.println("Bitte Passwort eingeben");
- 			return false;
- 		}
- 		
+ 		 		
  		try
  		{
- 			/**
- 			 * @ TODO Wenn kein User eingeben wird werden Fehler geschmießen. Dies muss noch abgefangen werden.
- 			 * 
- 			 * 
- 			 */
+
  			c = DBConnection.connect();
  			String SQL = "SELECT DISTINCT password,user from tb_user WHERE user = '"+user+"'";
  			System.out.println("Zusammengesetzter String lautet: "+SQL);
  			
- 			// ResultSet
  			ResultSet rs = c.createStatement().executeQuery(SQL);
  			
  			while (rs.next())
  			{
 				pwInput = rs.getString(1);
-
- 				//System.out.println("Result: "+rs.getString(1));  			
+		
  			} 
  					
  		} catch (Exception e)
  		{
  			e.printStackTrace();
  			System.out.println("Error on Building Data");
+ 			return false;
  		}
  		
  		if(pwInput.equals(pw)) {

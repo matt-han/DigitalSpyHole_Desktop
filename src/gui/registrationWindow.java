@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class registrationWindow extends Application {
@@ -26,6 +27,7 @@ public class registrationWindow extends Application {
 	private Stage stage;
 	private GridPane gridPane;
 	private Timestamp timestamp;
+	Label errMsg = new Label();
 
 	@Override
 	public void start(final Stage regisStage)
@@ -33,10 +35,10 @@ public class registrationWindow extends Application {
 
 		initGridPane();
 
-		/*********************** Textfelder ************************************************************/
-		Label regis_text = new Label("Registrierung");
-		regis_text.getStyleClass().add("txt_Login");
-		gridPane.add(regis_text, 0, 0, 2, 1);
+		/*********************** Textfelder  Labels ******************************************************/
+		Text regis_txt = new Text("Registrierung");
+		regis_txt.getStyleClass().add("txt_title");
+		gridPane.add(regis_txt, 0, 0, 2, 1);
 
 		Label lbVorname = new Label("Vorname");
 		gridPane.add(lbVorname, 0, 1);
@@ -75,28 +77,52 @@ public class registrationWindow extends Application {
 		gridPane.add(txtPw2, 1, 6);
 
 		/*********************** Buttons ***************************************************************/
+		Button btn_bck = new Button("Zurück");
+		HBox bckBtn = new HBox(10);
+		bckBtn.setAlignment(Pos.BOTTOM_RIGHT);
+		bckBtn.getChildren().add(btn_bck);
+		gridPane.add(bckBtn, 1, 8);
+
+		btn_bck.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event)
+			{
+				stage = new Stage();
+				// Starten des nächsten Fensters
+				passwortWindow pwWind = new passwortWindow();
+				pwWind.start(stage);
+				regisStage.close();
+			}
+		});
+		
 		Button btn_anmAbsch = new Button();
 		btn_anmAbsch.setText("Anmelden");
 		HBox anmAbschBtn = new HBox(10);
 		anmAbschBtn.setAlignment(Pos.BOTTOM_LEFT);
 		anmAbschBtn.getChildren().add(btn_anmAbsch);
-		gridPane.add(anmAbschBtn, 0, 7);
-
+		gridPane.add(anmAbschBtn, 0, 8);		
+		
 		btn_anmAbsch.setOnAction(new EventHandler<ActionEvent>() {
-
+			
 			@Override
 			public void handle(ActionEvent event)
 			{
+
 				// Abfangen ob überhaupt etwas in den Textfeldern steht.
 				if (0 >= txtVorname.getLength())
 				{
 					System.out.println("Textfeld Name empty");
+					errMsg.setText("Textfeld Name empty");
 				} else if (0 >= txtEmail.getLength())
 				{
 					System.out.println("Textfeld Email empty");
+					
+					errMsg.setText("Textfeld Email empty");
 				} else if (0 >= txtPw.getLength())
 				{
 					System.out.println("Textfeld Passwort empty");
+					errMsg.setText("Textfeld Passwort empty");
 				} else
 				{
 
@@ -116,15 +142,21 @@ public class registrationWindow extends Application {
 							System.out.println("Timestamp: " + dateFormat);
 
 							//SQL-Befehl mit den angegebenen Daten für die Datenbank
+							/*
 							String SQL = "INSERT INTO tb_user VALUES (null,'"
 									+ txtVorname.getText() + "', '"
 									+ txtNachname.getText() + "', '"
 									+ txtEmail.getText() + "', '"
 									+ txtUserName.getText() + "', '"
 									+ txtPw.getText() + "', '" + timestamp
-									+ "')";
+									+ "')"; */
+							String SQL = "INSERT INTO tb_user VALUES (null,'"
+									+ txtVorname.getText() + "', '"
+									+ txtNachname.getText() + "', '"
+									+ txtEmail.getText() + "', '"
+									+ txtUserName.getText() + "', '"
+									+ txtPw.getText() + "', NOW())";
 							System.out.println("Input DB user: "+ SQL);
-
 							
 							//Eintrag in die Datenbank
 							if (c.createStatement().executeUpdate(SQL) <= 0)
@@ -132,7 +164,7 @@ public class registrationWindow extends Application {
 								System.out.println("Es wurde nix in die Datenbank eingetragen.");
 							}
 
-							System.out.println("Eintrag in die DB: ");
+							System.out.println("Datensatz wurde eingetragen");
 
 						} catch (Exception e)
 						{
@@ -143,37 +175,23 @@ public class registrationWindow extends Application {
 					} else
 					{
 						System.out.println("Passwörter nicht gleich!");
+						errMsg.setText("Passwörter nicht gleich!");
 					}
-
+					
 				}
-	
+				
 			}
 		});
-
-		Button btn_bck = new Button("Zurück");
-		HBox bckBtn = new HBox(10);
-		bckBtn.setAlignment(Pos.BOTTOM_RIGHT);
-		bckBtn.getChildren().add(btn_bck);
-		gridPane.add(bckBtn, 1, 7);
-
-		btn_bck.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event)
-			{
-				stage = new Stage();
-				// Starten des nächsten Fensters
-				passwortWindow pwWind = new passwortWindow();
-				pwWind.start(stage);
-				regisStage.close();
-			}
-		});
+		
+		errMsg = new Label("");
+		errMsg.getStyleClass().add("label-errMsg");
+		gridPane.add(errMsg, 1, 7);
 
 		/*********************** Fenster Eigenschaften *************************************************/
 		regisStage.setTitle("Registrierung");
 		StackPane root = new StackPane();
 		root.getChildren().add(gridPane);
-		regisStage.setScene(new Scene(root, 430, 315));
+		regisStage.setScene(new Scene(root, 450, 335));
 		root.getStylesheets().add("myStyle.css");
 		regisStage.show();
 		/***********************************************************************************************/

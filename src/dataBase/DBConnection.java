@@ -8,7 +8,7 @@ public class DBConnection {
 	private static Connection conn;
 	
 	//private static String url = "jdbc:mysql://localhost:3306/db_spyhole";
-	private static String url = "jdbc:mysql://192.168.178.27:3306/db_spyhole";
+	private static String url = "jdbc:mysql://192.168.178.28:3306/db_spyhole";
 	private static String user = "pi";// Username of database
 	private static String pass = "";// Password of database
 	/*

@@ -20,7 +20,7 @@ public class imageViewWindow {
 	public void start(Stage primaryStage, int userID)
 	{
 		
-		primaryStage.setTitle("ImageView");
+		primaryStage.setTitle("Foto");
 		
 		DBImgShow imgShow = new DBImgShow();
 
@@ -36,26 +36,27 @@ public class imageViewWindow {
         	
         	System.out.println("Länge at DB: " + imgData.length);
         	
+        	// Byte Array wird in ein BufferedImage gewandelt
         	BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(imgData));
         	System.out.println("Width at bufImg: " + bufImg.getWidth());
         	System.out.println("Height at bufImg: " + bufImg.getHeight());
         	WritableImage img2 = new WritableImage(bufImg.getWidth(),bufImg.getHeight());
+        	
+        	//Foto nach JavaFX Objekt wandeln
         	SwingFXUtils.toFXImage(bufImg, img2);
 
+        	//Foto imageView hinzufügen
         	imageView.setImage(img2);
        
         }
         catch (Exception e)
         {
           e.printStackTrace();
-         // throw e;
         }
-        
-        
+             
         
         sp.getChildren().add(imageView);
-        /*********************** Fenster Eigenschaften *************************************************/
-        //Adding HBox to the scene
+        /*********************** Fenster Eigenschaften *************************************************/        
         Scene scene = new Scene(sp);
         primaryStage.setScene(scene);
         primaryStage.show();
