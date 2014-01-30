@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -25,6 +26,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class streamWindow {
@@ -33,10 +36,12 @@ public class streamWindow {
 	private Stage stage;
 	private Timestamp timestamp;
 	private final String TAG = "OPEN";
-	private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
+	
+	//private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
 	
 	//private static final String MEDIA_URL = "http://spyhole.no-ip.biz:1900/?action=stream";
 	//private static final String MEDIA_URL = "http://192.168.178.27:8080/";
+	//private static final String MEDIA_URL = "http://10.0.1.83:1900/javascript_simple.html";
     private static String arg1;
 	
     public void start(final Stage primaryStage) {
@@ -82,7 +87,17 @@ public class streamWindow {
 		
 		
 		/*********************** Media Stream **********************************************************/
-        // create media player
+		 WebView webview = new WebView();
+         webview.setVisible(true);
+         WebEngine webengine = webview.getEngine();
+         webengine.setJavaScriptEnabled(true);
+         File file = new File("http://10.0.1.83:1900/javascript_simple.html");
+         System.out.println(file.exists() + " file exitence");
+         webengine.load(file.toString());
+         gridPane.add(webview, 0, 0, 5, 35);
+         
+		/*
+		// create media player
         Media media = new Media((arg1 != null) ? arg1 : MEDIA_URL);
         final MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
@@ -90,8 +105,8 @@ public class streamWindow {
         // create mediaView and add media player to the viewer
         MediaView mediaView = new MediaView(mediaPlayer);
        // ((Group)scene.getRoot()).getChildren().add(mediaView);
-        gridPane.add(mediaView, 0, 1, 5, 4);
-        
+        gridPane.add(mediaView, 0, 0, 5, 35);
+        */
         /** Database Button */
 		btn_data.setOnAction(new EventHandler<ActionEvent>() {
 			 
@@ -102,7 +117,7 @@ public class streamWindow {
             	dataWindow dataWin = new dataWindow();
             	dataWin.start(stage);
             	//mediaPlayer.setMute(true);
-            	mediaPlayer.stop();
+            //	mediaPlayer.stop();
             	primaryStage.close();
            
             }
