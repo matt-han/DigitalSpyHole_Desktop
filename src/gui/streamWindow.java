@@ -1,6 +1,11 @@
 package gui;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -27,6 +32,7 @@ public class streamWindow {
 	private GridPane gridPane;
 	private Stage stage;
 	private Timestamp timestamp;
+	private final String TAG = "OPEN";
 	private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
 	
 	//private static final String MEDIA_URL = "http://spyhole.no-ip.biz:1900/?action=stream";
@@ -73,6 +79,7 @@ public class streamWindow {
             	inputDbOpenDoor();
             }
         }); 
+		
 		
 		/*********************** Media Stream **********************************************************/
         // create media player
@@ -151,5 +158,29 @@ public class streamWindow {
 		}
     }
     
-	
+
+    public void OpenDoor(String urlToRead) {
+        URL url;
+        HttpURLConnection connection;
+        String line;
+        StringBuffer response = new StringBuffer();
+
+        try {
+            url = new URL(urlToRead);
+            //Verbinung aufbauen
+            connection = (HttpURLConnection) url.openConnection();
+            //Request-Methode GET ausführen
+            connection.setRequestMethod("GET");
+            //Content-type mit dem TAG setzen
+            connection.setRequestProperty("Content-type", TAG);
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            while ((line = in.readLine()) != null){
+                response.append(line);
+            }
+            in.close();
+
+        }catch (IOException e){
+
+        }
+    }
 }
