@@ -4,13 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import sun.net.www.http.HttpClient;
 import dataBase.DBConnection;
 import gui.dataWindow;
 import javafx.event.ActionEvent;
@@ -30,24 +34,36 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;		// httpclient
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair; //httpcore
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 public class streamWindow {
 	
 	private GridPane gridPane;
 	private Stage stage;
 	private Timestamp timestamp;
 	private final String TAG = "OPEN";
-	
-	//private static final String MEDIA_URL = "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv";
-	
-	//private static final String MEDIA_URL = "http://spyhole.no-ip.biz:1900/?action=stream";
-	//private static final String MEDIA_URL = "http://192.168.178.27:8080/";
-	//private static final String MEDIA_URL = "http://10.0.1.83:1900/javascript_simple.html";
     private static String arg1;
+    private final String USER_AGENT = "Mozilla/5.0";
+    
 	
     public void start(final Stage primaryStage) {
     	
     	initGridPaneButtons();
-    	
+
         primaryStage.setTitle("Control");
         
         Text ctrl_txt = new Text("Control");
@@ -55,12 +71,13 @@ public class streamWindow {
 		gridPane.add(ctrl_txt, 0, 0, 2, 1);
         
         /*********************** Buttons ***************************************************************/
-        Button btn_stream = new Button("Control Center");
+        Button btn_stream = new Button("Control");
 		btn_stream.setDisable(true);
 		HBox btnStream = new HBox(10);
 		btnStream.setAlignment(Pos.CENTER);
 		btnStream.getChildren().add(btn_stream);
-		gridPane.add(btnStream, 5, 1);
+		//gridPane.add(btnStream, 7, 1);
+		gridPane.add(btnStream, 0, 1, 2, 1);
 
 		
         Button btn_data = new Button("Database");
@@ -68,7 +85,8 @@ public class streamWindow {
         HBox data_btn = new HBox(10);
         data_btn.setAlignment(Pos.CENTER);
         data_btn.getChildren().add(btn_data);
-		gridPane.add(data_btn, 5, 2);
+		//gridPane.add(data_btn, 7, 2);
+		gridPane.add(data_btn, 0, 2, 2, 2);
 
 		
         Button btn_open = new Button("Open");
@@ -76,12 +94,15 @@ public class streamWindow {
         HBox btnOpen = new HBox(10);
         btnOpen.setAlignment(Pos.CENTER);
         btnOpen.getChildren().add(btn_open);
-		gridPane.add(btnOpen, 5, 3);
+		//gridPane.add(btnOpen, 7, 3);
+		gridPane.add(btnOpen, 0, 4, 2, 4);
 		btn_open.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
             public void handle(ActionEvent event) {
-            	inputDbOpenDoor();
+            	//inputDbOpenDoor();
+            	OpenDoor("http://192.168.178.27/index.php");
+            	
             }
         }); 
 		
@@ -91,22 +112,12 @@ public class streamWindow {
          webview.setVisible(true);
          WebEngine webengine = webview.getEngine();
          webengine.setJavaScriptEnabled(true);
-         File file = new File("http://10.0.1.83:1900/javascript_simple.html");
+         //File file = new File("http://10.0.1.83:1900/javascript_simple.html");
+         File file = new File("http://192.168.178.27:8080/javascript_simple.html");
          System.out.println(file.exists() + " file exitence");
          webengine.load(file.toString());
-         gridPane.add(webview, 0, 0, 5, 35);
+         gridPane.add(webview, 5, 0, 9, 35);
          
-		/*
-		// create media player
-        Media media = new Media((arg1 != null) ? arg1 : MEDIA_URL);
-        final MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        
-        // create mediaView and add media player to the viewer
-        MediaView mediaView = new MediaView(mediaPlayer);
-       // ((Group)scene.getRoot()).getChildren().add(mediaView);
-        gridPane.add(mediaView, 0, 0, 5, 35);
-        */
         /** Database Button */
 		btn_data.setOnAction(new EventHandler<ActionEvent>() {
 			 
@@ -126,7 +137,7 @@ public class streamWindow {
         /*********************** Fenster Eigenschaften *************************************************/
         StackPane root = new StackPane();
         root.getChildren().addAll(gridPane);
-        primaryStage.setScene(new Scene(root, 750, 450));
+        primaryStage.setScene(new Scene(root, 880, 520));
         root.getStylesheets().add("myStyle.css");
         primaryStage.show();
         /***********************************************************************************************/
@@ -136,9 +147,9 @@ public class streamWindow {
     private void initGridPaneButtons()
     {
     	gridPane = new GridPane();
-    	gridPane.setHgap(30);
+    	gridPane.setHgap(10);
     	gridPane.setVgap(10);
-    	gridPane.setPadding(new Insets(0, 25, 0, 25));
+    	gridPane.setPadding(new Insets(25, 25, 5, 25));
     }
     
     private void inputDbOpenDoor()
@@ -173,10 +184,59 @@ public class streamWindow {
 		}
     }
     
-
+ 
     public void OpenDoor(String urlToRead) {
-        URL url;
-        HttpURLConnection connection;
+    	
+    	String url = "https://selfsolve.apple.com/wcResults.do";
+
+    	 
+    	org.apache.http.client.HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(urlToRead);
+
+		// add header
+		//post.setHeader("User-Agent", "USER_AGENT");
+		post.setHeader("Content-type", "text/plain; open");
+ 
+		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+		//urlParameters.add(new BasicNameValuePair("sn", "C02G8416DRJM"));
+		//urlParameters.add(new BasicNameValuePair("cn", ""));
+		//urlParameters.add(new BasicNameValuePair("locale", ""));
+		//urlParameters.add(new BasicNameValuePair("caller", ""));
+		//urlParameters.add(new BasicNameValuePair("num", "12345"));
+		//urlParameters.add(new BasicNameValuePair("Content-type", "open"));
+ 
+		try
+		{
+			post.setEntity(new UrlEncodedFormEntity(urlParameters));
+			HttpResponse response = client.execute(post);
+			System.out.println("\nSending 'POST' request to URL : " + urlToRead);
+			System.out.println("Post parameters : " + post.getEntity());
+			System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+	 
+			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+			
+			StringBuffer result = new StringBuffer();
+			String line = "";
+			while ((line = rd.readLine()) != null) {
+				result.append(line);
+				System.out.println("Line: " + line);
+			}
+			rd.close();
+			
+			//System.out.println(result.toString());
+			
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ 
+
+ 
+		
+        
+    	/*
+
         String line;
         StringBuffer response = new StringBuffer();
 
@@ -185,17 +245,30 @@ public class streamWindow {
             //Verbinung aufbauen
             connection = (HttpURLConnection) url.openConnection();
             //Request-Methode GET ausführen
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
+            connection.setDoInput( true );
+            connection.setDoOutput( true );
+            connection.setUseCaches( false );
             //Content-type mit dem TAG setzen
-            connection.setRequestProperty("Content-type", TAG);
+            connection.setRequestProperty("Content-type", "text/plain; open");
+            
+            int responseCode = connection.getResponseCode();
+    		System.out.println("\nSending 'GET' request to URL : " + url);
+    		System.out.println("Response Code : " + responseCode);
+            
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            
             while ((line = in.readLine()) != null){
                 response.append(line);
+                System.out.println("Line: " + line);
             }
             in.close();
 
         }catch (IOException e){
-
+        	System.out.println("Error HTTP");
         }
+     */
     }
+    
+
 }
