@@ -67,7 +67,7 @@ public class passwortWindow extends Application {
 				
 				System.out.println("userAnm: "+userAnm);
 				System.out.println("PW: "+pwAnm);
-				/*
+				
 		 		if(userAnm.length() <=0 )
 		 		{
 		 			errMsg.setText("Bitte User eingeben");
@@ -78,20 +78,20 @@ public class passwortWindow extends Application {
 		 			errMsg.setText("Bitte Passwort eingeben");
 		 			System.out.println("Bitte Passwort eingeben");
 		 			
-		 		} else if(pwEqual(userAnm, pwAnm)== true) {			*/	
+		 		} else if(pwEqual(userAnm, pwAnm)== true) {				
 	            	stage = new Stage();
 	            	
 	            	//Starten des nächsten Fensters
 	            	streamWindow strWin = new streamWindow();
 	            	strWin.start(stage);        
-					pwWind.close(); 								/*
+					pwWind.close(); 								
 				}
 		 		else
 		 		{
 		 			errMsg.setText("Falsche Eingabe");
 		 			System.out.println("Falsche Eingabe");
 		 		}
-				*/
+				
 				
 				
 			}

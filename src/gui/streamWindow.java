@@ -40,7 +40,8 @@ public class streamWindow {
 	private GridPane gridPane;
 	private Stage stage;
 	private Timestamp timestamp;
-	    
+	final private double stream_width = 365; 
+	final private double stream_height = 255;  
     
     HttpURLConnection connection;
 	
@@ -93,13 +94,15 @@ public class streamWindow {
 		/*********************** Media Stream **********************************************************/
 		 WebView webview = new WebView();
          webview.setVisible(true);
+         webview.setMaxWidth(stream_width);
+         webview.setMaxHeight(stream_height);
          WebEngine webengine = webview.getEngine();
          webengine.setJavaScriptEnabled(true);
          File file = new File("http://spyhole.no-ip.biz:1900/javascript_simple.html");
          //File file = new File("http://192.168.178.27:8080/javascript_simple.html");
          System.out.println(file.exists() + " file exitence");
          webengine.load(file.toString());
-         gridPane.add(webview, 5, 0, 9, 35);
+         gridPane.add(webview, 5, 1, 9, 16);
          
         /** Database Button */
 		btn_data.setOnAction(new EventHandler<ActionEvent>() {
@@ -120,7 +123,7 @@ public class streamWindow {
         /*********************** Fenster Eigenschaften *************************************************/
         StackPane root = new StackPane();
         root.getChildren().addAll(gridPane);
-        primaryStage.setScene(new Scene(root, 880, 520));
+        primaryStage.setScene(new Scene(root, 550, 520));
         root.getStylesheets().add("myStyle.css");
         primaryStage.show();
         /***********************************************************************************************/
