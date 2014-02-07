@@ -34,6 +34,7 @@ public class DisplayDatabase {
 		{
 			System.out.println("DB daten holen");
 			c = DBConnection.connect();
+			
 			String SQL = "SELECT * from tb_doorlogger";
 			
 			// ResultSet

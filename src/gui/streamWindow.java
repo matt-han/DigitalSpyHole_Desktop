@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import sun.net.www.http.HttpClient;
 import dataBase.DBConnection;
 import gui.dataWindow;
 import javafx.event.ActionEvent;
@@ -34,31 +34,15 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;		// httpclient
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair; //httpcore
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 public class streamWindow {
 	
 	private GridPane gridPane;
 	private Stage stage;
 	private Timestamp timestamp;
-	private final String TAG = "OPEN";
-    private static String arg1;
-    private final String USER_AGENT = "Mozilla/5.0";
+	    
     
+    HttpURLConnection connection;
 	
     public void start(final Stage primaryStage) {
     	
@@ -100,9 +84,8 @@ public class streamWindow {
  
             @Override
             public void handle(ActionEvent event) {
-            	//inputDbOpenDoor();
-            	OpenDoor("http://192.168.178.27/index.php");
-            	
+            	inputDbOpenDoor();
+            	OpenDoor();
             }
         }); 
 		
@@ -112,8 +95,8 @@ public class streamWindow {
          webview.setVisible(true);
          WebEngine webengine = webview.getEngine();
          webengine.setJavaScriptEnabled(true);
-         //File file = new File("http://10.0.1.83:1900/javascript_simple.html");
-         File file = new File("http://192.168.178.27:8080/javascript_simple.html");
+         File file = new File("http://spyhole.no-ip.biz:1900/javascript_simple.html");
+         //File file = new File("http://192.168.178.27:8080/javascript_simple.html");
          System.out.println(file.exists() + " file exitence");
          webengine.load(file.toString());
          gridPane.add(webview, 5, 0, 9, 35);
@@ -184,90 +167,25 @@ public class streamWindow {
 		}
     }
     
- 
-    public void OpenDoor(String urlToRead) {
+ /***
+  * 
+  * 
+  */
+    public void OpenDoor() {
     	
-    	String url = "https://selfsolve.apple.com/wcResults.do";
-
-    	 
-    	org.apache.http.client.HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(urlToRead);
-
-		// add header
-		//post.setHeader("User-Agent", "USER_AGENT");
-		post.setHeader("Content-type", "text/plain; open");
- 
-		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-		//urlParameters.add(new BasicNameValuePair("sn", "C02G8416DRJM"));
-		//urlParameters.add(new BasicNameValuePair("cn", ""));
-		//urlParameters.add(new BasicNameValuePair("locale", ""));
-		//urlParameters.add(new BasicNameValuePair("caller", ""));
-		//urlParameters.add(new BasicNameValuePair("num", "12345"));
-		//urlParameters.add(new BasicNameValuePair("Content-type", "open"));
- 
-		try
-		{
-			post.setEntity(new UrlEncodedFormEntity(urlParameters));
-			HttpResponse response = client.execute(post);
-			System.out.println("\nSending 'POST' request to URL : " + urlToRead);
-			System.out.println("Post parameters : " + post.getEntity());
-			System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
-	 
-			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-			
-			StringBuffer result = new StringBuffer();
-			String line = "";
-			while ((line = rd.readLine()) != null) {
-				result.append(line);
-				System.out.println("Line: " + line);
-			}
-			rd.close();
-			
-			//System.out.println(result.toString());
-			
-		} catch (IOException e)
-		{
+    	
+        try {
+			URL u = new URL( "http://spyhole.no-ip.biz?open=open");
+			u.openStream();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 
-
- 
-		
-        
-    	/*
-
-        String line;
-        StringBuffer response = new StringBuffer();
-
-        try {
-            url = new URL(urlToRead);
-            //Verbinung aufbauen
-            connection = (HttpURLConnection) url.openConnection();
-            //Request-Methode GET ausführen
-            connection.setRequestMethod("POST");
-            connection.setDoInput( true );
-            connection.setDoOutput( true );
-            connection.setUseCaches( false );
-            //Content-type mit dem TAG setzen
-            connection.setRequestProperty("Content-type", "text/plain; open");
-            
-            int responseCode = connection.getResponseCode();
-    		System.out.println("\nSending 'GET' request to URL : " + url);
-    		System.out.println("Response Code : " + responseCode);
-            
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            
-            while ((line = in.readLine()) != null){
-                response.append(line);
-                System.out.println("Line: " + line);
-            }
-            in.close();
-
-        }catch (IOException e){
-        	System.out.println("Error HTTP");
-        }
-     */
+    
+     
     }
     
 
