@@ -37,14 +37,11 @@ public class DisplayDatabase {
 			
 			String SQL = "SELECT * from tb_doorlogger";
 			
-			// ResultSet
 			ResultSet rs = c.createStatement().executeQuery(SQL);
-			/**********************************
-			 * TABLE COLUMN ADDED DYNAMICALLY *
-			 **********************************/
+
+			/** Spalten ermitteln und der Tabelle übergeben*/
 			for (int i = 0; i < rs.getMetaData().getColumnCount(); i++)
-			{
-				// We are using non property style for making dynamic table
+			{				
 				final int j = i;
 				TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
 				col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
@@ -56,28 +53,28 @@ public class DisplayDatabase {
 				});
 				tableview.getColumns().addAll(col);
 			}
-			/********************************
-			 * Data added to ObservableList *
-			 ********************************/
+
+			/** Daten in die ObservableList hinzufügen -> Zeilen auslesen*/
 			while (rs.next())
 			{
-				// Iterate Row
+				
 				ObservableList<String> row = FXCollections.observableArrayList();
 				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
 				{
-					// Iterate Column
+					
 					row.add(rs.getString(i));
 				}
-				System.out.println("Row added "+row );
+				System.out.println("Zeile added "+row );
 				data.add(row);
 				complRow++;
 			}
-			// FINALLY ADDED TO TableView
+			
+			/** Ausgelesene Daten der Tabelle hinzufügen */
 			tableview.setItems(data);
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			System.out.println("Error on Building Data");
+			System.out.println("Error");
 		}
 		
 	}

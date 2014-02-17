@@ -142,14 +142,7 @@ public class registrationWindow extends Application {
 							System.out.println("Timestamp: " + dateFormat);
 
 							//SQL-Befehl mit den angegebenen Daten für die Datenbank
-							/*
-							String SQL = "INSERT INTO tb_user VALUES (null,'"
-									+ txtVorname.getText() + "', '"
-									+ txtNachname.getText() + "', '"
-									+ txtEmail.getText() + "', '"
-									+ txtUserName.getText() + "', '"
-									+ txtPw.getText() + "', '" + timestamp
-									+ "')"; */
+
 							String SQL = "INSERT INTO tb_user VALUES (null,'"
 									+ txtVorname.getText() + "', '"
 									+ txtNachname.getText() + "', '"
@@ -169,7 +162,7 @@ public class registrationWindow extends Application {
 						} catch (Exception e)
 						{
 							e.printStackTrace();
-							System.out.println("Error on Building Data");
+							System.out.println("Error");
 						}
 
 					} else

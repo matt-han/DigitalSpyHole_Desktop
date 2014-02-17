@@ -34,6 +34,7 @@ public class imageViewWindow {
         	//Foto aus DB holen 
         	byte[] imgData = imgShow.getImageDB(userID);
         	
+        	
         	System.out.println("Länge at DB: " + imgData.length);
         	
         	// Byte Array wird in ein BufferedImage gewandelt
@@ -62,5 +63,6 @@ public class imageViewWindow {
         primaryStage.show();
         /***********************************************************************************************/
 	}
+	
 
 }

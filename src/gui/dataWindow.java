@@ -1,5 +1,6 @@
 package gui;
 
+
 import dataBase.DisplayDatabase;
 import gui.streamWindow;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 public class dataWindow<MyIntegerTableCell> {
 	private GridPane gridPane;
 	private Stage stage;
+	
 	
 	@SuppressWarnings("rawtypes")
 	private TableView tableview;
@@ -113,7 +115,9 @@ public class dataWindow<MyIntegerTableCell> {
 		if(i > 1) {
 			btn_openPicture.setDisable(false);
 			comboBox.setDisable(false);
+			comboBox.setValue(1);
 		}
+
 		
 		/*********************** Button Event für die ComboBox ******************************************/
 		btn_openPicture.setOnAction(new EventHandler<ActionEvent>() {

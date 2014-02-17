@@ -123,7 +123,7 @@ public class passwortWindow extends Application {
 		
 		/**
 		 * Der folgende Button wurde für Testzwecke implementiert. Wenn dieser betätigt wird wird das
-		 * angegeben Foto in der DBImgSave Klasse binär in der Datenbank abgespeichert.
+		 * angegeben Foto in der DBImgSave-Klasse binär in der Datenbank abgespeichert.
 		 */
 		/*
 		Button btn_Image = new Button("SaveImage");
@@ -232,7 +232,6 @@ public class passwortWindow extends Application {
 
  			c = DBConnection.connect();
  			String SQL = "SELECT DISTINCT password,user from tb_user WHERE user = '"+user+"'";
- 			System.out.println("Zusammengesetzter String lautet: "+SQL);
  			
  			ResultSet rs = c.createStatement().executeQuery(SQL);
  			
@@ -245,7 +244,7 @@ public class passwortWindow extends Application {
  		} catch (Exception e)
  		{
  			e.printStackTrace();
- 			System.out.println("Error on Building Data");
+ 			System.out.println("Error");
  			return false;
  		}
  		
